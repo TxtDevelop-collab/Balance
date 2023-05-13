@@ -1,0 +1,127 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
+}
+
+android {
+    namespace 'com.example.balance'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.balance"
+        minSdk 29
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    applicationVariants.all{
+        variant ->
+            variant.outputs.each{
+                output ->
+                    def name = "Balance.apk"
+                    output.outputFileName = name
+            }
+
+    }
+    tasks.register("testTareas") {
+        dependsOn("build")
+        doLast {
+            if (tasks.test.failedTestCount > 0) {
+                println("¡ERROR: Algunas pruebas fallaron!")
+            }else{
+                println("TODO CORRECTO")
+            }
+        }
+        doFirst{
+            println("COMENZANDO TAREAS")
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    //GSON
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.10"
+    // retrofit, adapters
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+
+    //OkhttClient
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.4.1'
+    implementation 'com.android.support:multidex:1.0.3'
+
+    //Hilt
+    implementation "com.google.dagger:hilt-android:2.44.1"
+    kapt "com.google.dagger:hilt-android-compiler:2.44.1"
+
+    //LifeCycle
+    implementation "androidx.activity:activity-ktx:1.7.1"
+    implementation "androidx.fragment:fragment-ktx:1.5.7"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    //Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
+
+
+    //implementacion para testing
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito.kotlin:mockito-kotlin:4.0.0'
+    //For runBlockingTest, CoroutineDispatcher etc.
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    //Room
+    def room_version = '2.3.0'
+    //For corutines
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    testImplementation "androidx.room:room-testing:$room_version"
+
+
+
+    //Testing MockWebServer
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.9.0'
+
+    //Testing our button to sinc
+    testImplementation "org.robolectric:robolectric:4.6.1"
+    //Testing for observers and liveData
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+
+}
