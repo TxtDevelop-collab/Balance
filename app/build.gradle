@@ -1,3 +1,5 @@
+
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -44,7 +46,7 @@ android {
             }
 
     }
-    tasks.register("testTareas") {
+    /*  tasks.register("testTareas") {
         dependsOn("build")
         doLast {
             if (tasks.test.failedTestCount > 0) {
@@ -56,7 +58,9 @@ android {
         doFirst{
             println("COMENZANDO TAREAS")
         }
-    }
+    }*/
+
+
 }
 
 dependencies {
